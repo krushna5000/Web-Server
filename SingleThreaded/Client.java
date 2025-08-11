@@ -1,5 +1,4 @@
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -16,7 +15,6 @@ public class Client {
         PrintWriter toSocket = new PrintWriter(socket.getOutputStream(), true);
         BufferedReader fromSocket = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         toSocket.println("Hello World from socket "+socket.getLocalSocketAddress());
-        String line = fromSocket.readLine();
         toSocket.close();
         fromSocket.close();
         socket.close();

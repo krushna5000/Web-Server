@@ -15,18 +15,19 @@ public class Client {
                 int port = 8010;
                 try {
                     InetAddress address = InetAddress.getByName("localhost");
-                    Socket socket = new Socket(address, port);
-                    try (
-                        PrintWriter toSocket = new PrintWriter(socket.getOutputStream(), true);
-                        BufferedReader fromSocket = new BufferedReader(new InputStreamReader(socket.getInputStream()))
-                    ) {
-                        toSocket.println("Hello from Client " + socket.getLocalSocketAddress());
-                        String line = fromSocket.readLine();
-                        System.out.println("Response from Server " + line);
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    try (Socket socket = new Socket(address, port)) {
+                        try (
+                            PrintWriter toSocket = new PrintWriter(socket.getOutputStream(), true);
+                            BufferedReader fromSocket = new BufferedReader(new InputStreamReader(socket.getInputStream()))
+                        ) {
+                            toSocket.println("Hello from Client " + socket.getLocalSocketAddress());
+                            String line = fromSocket.readLine();
+                            System.out.println("Response from Server " + line);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        // The socket will be closed automatically when leaving the try-with-resources block
                     }
-                    // The socket will be closed automatically when leaving the try-with-resources block
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
